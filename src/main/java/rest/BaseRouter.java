@@ -43,7 +43,7 @@ public class BaseRouter {
 		response.type("application/json");
 	}
 
-	public final static Gson gson;
+	public static Gson gson;
 	static {
 		GsonBuilder builder = new GsonBuilder();
 		builder.registerTypeAdapter(BigInteger.class, new BigIntegerTypeAdapter());

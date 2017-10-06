@@ -77,7 +77,7 @@ public class DatabaseHelper {
 	public static <T> List<T> Get(Class<T> t) {
 		Session session = sessionFactory.openSession();
 		session.beginTransaction();
-		List<T> list = (List<T>) session.createQuery("from " + getTableName(t)).list();
+		List<T> list = (List<T>) session.createQuery("FROM " + getTableName(t)).list();
 		session.getTransaction().commit();
 		session.close();
 		return list;
