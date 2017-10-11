@@ -18,6 +18,7 @@ public class BaseRouter {
 
 	public BaseRouter(int port) {
 		port(port);
+		
 		options("/*", (request, response) -> configureOptions(request, response));
 		before((request, response) -> configureBefore(request, response));
 	}
