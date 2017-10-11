@@ -3,17 +3,24 @@ package data;
 import java.math.BigDecimal;
 import java.util.Date;
 
+import com.google.gson.annotations.Expose;
+
 import interfaces.HashValue;
 import signatures.Signature;
 
 public class Tuple {
+	@Expose
 	private int groupId;
+	@Expose
 	@HashValue
 	private BigDecimal longitude;
+	@Expose
 	@HashValue
 	private BigDecimal latitude;
+	@Expose
 	@HashValue
 	private Date created;
+	@Expose
 	private BaseSignature signature;
 
 	public int getGroupId() {

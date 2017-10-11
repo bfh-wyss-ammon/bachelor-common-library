@@ -1,18 +1,29 @@
 package data;
 
 import java.math.BigInteger;
+
+import com.google.gson.annotations.Expose;
+
 import signatures.Signature;
 
 public class BaseSignature implements Signature {
-	
+	@Expose
 	private BigInteger u;
+	@Expose
 	private BigInteger bigU1;
+	@Expose
 	private BigInteger bigU2;
+	@Expose
 	private BigInteger bigU3;
+	@Expose
 	private BigInteger zx;
+	@Expose
 	private BigInteger zr;
+	@Expose
 	private BigInteger ze;
+	@Expose
 	private BigInteger zbigR;
+	@Expose
 	private BigInteger c;
 
 
