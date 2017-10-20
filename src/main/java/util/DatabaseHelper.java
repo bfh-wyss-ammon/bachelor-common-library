@@ -1,14 +1,19 @@
 package util;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 
+import javax.persistence.Query;
+
+import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.MetadataSources;
 import org.hibernate.boot.registry.StandardServiceRegistry;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
+import org.hibernate.criterion.Restrictions;
 
 public class DatabaseHelper {
 	private static final StandardServiceRegistry registry;
@@ -124,4 +129,16 @@ public class DatabaseHelper {
 		session.getTransaction().commit();
 		session.close();
 	}
+	
+	public static void Delete(Class t, String dateField, Date olderThan) {
+		Session session = sessionFactory.openSession();
+		session.beginTransaction();
+		Query query = session.createQuery("DELETE FROM " + getTableName(t) + " WHERE " + dateField +" < :date ");
+		query.setParameter("date", olderThan).executeUpdate();
+		session.getTransaction().commit();
+		session.close();
+		return;
+	}
+	
+
 }
