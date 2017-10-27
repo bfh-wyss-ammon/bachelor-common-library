@@ -1,6 +1,9 @@
 package util;
 
 import java.io.Serializable;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.Date;
 import java.util.List;
 
@@ -138,6 +141,15 @@ public class DatabaseHelper {
 		session.getTransaction().commit();
 		session.close();
 		return;
+	}
+	
+	public static  <T> List<T> Get(Class<T> t, String where, String dateField, Date after, Date before) {
+		Session session = sessionFactory.openSession();
+		session.beginTransaction();
+		List<T> list = (List<T>)session.createQuery("FROM " + getTableName(t) + " WHERE " + where + " AND " + dateField +" BETWEEN " + after + " AND " + before);
+		session.getTransaction().commit();
+		session.close();
+		return list;
 	}
 	
 
