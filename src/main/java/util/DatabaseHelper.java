@@ -147,16 +147,17 @@ public class DatabaseHelper {
 	
 	public static  <T> List<T> Get(Class<T> t, String where, String dateField, Date after, Date before) {
 		
+		Session session = sessionFactory.openSession();
+		session.beginTransaction();
+		
 		DateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		String strAfter = format.format(after);
 		String strBefore = format.format(before);
 		
-		String query = "FROM " + getTableName(t) + " WHERE " + where + " AND " + dateField +" >='" + strAfter + "' AND " +dateField +" <='" +  strBefore + "'";
+		String query = "FROM " + getTableName(t) + " WHERE " + where + " AND " + dateField +" >= '" + strAfter + "' AND " +dateField +" <= '" +  strBefore + "'";
 		System.out.println(query);
-		Session session = sessionFactory.openSession();
-		session.beginTransaction();
-		List<T> list = (List<T>)session.createQuery(query);
-		session.getTransaction().commit();
+		
+		List<T> list = (List<T>)session.createQuery(query).list();
 		session.close();
 		return list;
 	}
