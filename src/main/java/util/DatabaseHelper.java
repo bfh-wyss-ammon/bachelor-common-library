@@ -1,6 +1,8 @@
 package util;
 
 import java.io.Serializable;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -144,9 +146,16 @@ public class DatabaseHelper {
 	}
 	
 	public static  <T> List<T> Get(Class<T> t, String where, String dateField, Date after, Date before) {
+		
+		DateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		String strAfter = format.format(after);
+		String strBefore = format.format(before);
+		
+		String query = "FROM " + getTableName(t) + " WHERE " + where + " AND " + dateField +" >='" + strAfter + "' AND " +dateField +" <='" +  strBefore + "'";
+		System.out.println(query);
 		Session session = sessionFactory.openSession();
 		session.beginTransaction();
-		List<T> list = (List<T>)session.createQuery("FROM " + getTableName(t) + " WHERE " + where + " AND " + dateField +" BETWEEN " + after + " AND " + before);
+		List<T> list = (List<T>)session.createQuery(query);
 		session.getTransaction().commit();
 		session.close();
 		return list;
