@@ -1,6 +1,8 @@
 package util;
 
 import java.io.Serializable;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -132,25 +134,32 @@ public class DatabaseHelper {
 		session.getTransaction().commit();
 		session.close();
 	}
-	
+
 	public static void Delete(Class t, String dateField, Date olderThan) {
 		Session session = sessionFactory.openSession();
 		session.beginTransaction();
-		Query query = session.createQuery("DELETE FROM " + getTableName(t) + " WHERE " + dateField +" < :date ");
+		Query query = session.createQuery("DELETE FROM " + getTableName(t) + " WHERE " + dateField + " < :date ");
 		query.setParameter("date", olderThan).executeUpdate();
 		session.getTransaction().commit();
 		session.close();
 		return;
 	}
-	
-	public static  <T> List<T> Get(Class<T> t, String where, String dateField, Date after, Date before) {
+
+	public static <T> List<T> Get(Class<T> t, String where, String dateField, Date after, Date before) {
+
 		Session session = sessionFactory.openSession();
 		session.beginTransaction();
-		List<T> list = (List<T>)session.createQuery("FROM " + getTableName(t) + " WHERE " + where + " AND " + dateField +" BETWEEN " + after + " AND " + before);
-		session.getTransaction().commit();
+
+		DateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		String strAfter = format.format(after);
+		String strBefore = format.format(before);
+
+		String query = "FROM " + getTableName(t) + " WHERE " + where + " AND " + dateField + " >= '" + strAfter
+				+ "' AND " + dateField + " <= '" + strBefore + "'";
+
+		List<T> list = (List<T>) session.createQuery(query).list();
 		session.close();
 		return list;
 	}
-	
 
 }
