@@ -53,8 +53,9 @@ public class BigIntegerType implements UserType {
 	@Override
 	public Object nullSafeGet(ResultSet rs, String[] names, SharedSessionContractImplementor session, Object owner)
 			throws HibernateException, SQLException {
+				
 		String text = (String) StringType.INSTANCE.get(rs, names[0], session);
-		if (text != null) {
+		if (text != null && text.length() > 0) {
 			return new BigInteger(text);
 		}
 		return null;
@@ -63,6 +64,7 @@ public class BigIntegerType implements UserType {
 	@Override
 	public void nullSafeSet(PreparedStatement st, Object value, int index, SharedSessionContractImplementor session)
 			throws HibernateException, SQLException {
+		
 		// TODO Auto-generated method stub
 		if (value == null) {
 			st.setNull(index, Types.OTHER);
