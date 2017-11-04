@@ -75,6 +75,17 @@ public class DatabaseHelper {
 		session.close();
 		return result;
 	}
+	
+	public static <T> List<T> GetList(Class<T> t, String where) {
+		Session session = sessionFactory.openSession();
+		session.beginTransaction();
+		
+		String query = "FROM " + getTableName(t) + " WHERE " + where;
+
+		List<T> list = (List<T>) session.createQuery(query).list();
+		session.close();
+		return list;
+	}
 
 	public static <T> Boolean Exists(Class<?> t, String where) {
 		Session session = sessionFactory.openSession();
@@ -139,6 +150,16 @@ public class DatabaseHelper {
 		Session session = sessionFactory.openSession();
 		session.beginTransaction();
 		Query query = session.createQuery("DELETE FROM " + getTableName(t) + " WHERE " + dateField + " < :date ");
+		query.setParameter("date", olderThan).executeUpdate();
+		session.getTransaction().commit();
+		session.close();
+		return;
+	}
+	
+	public static void Delete(Class t, String where, String dateField, Date olderThan) {
+		Session session = sessionFactory.openSession();
+		session.beginTransaction();
+		Query query = session.createQuery("DELETE FROM " + getTableName(t) + " WHERE " + dateField + " < :date AND " + where);
 		query.setParameter("date", olderThan).executeUpdate();
 		session.getTransaction().commit();
 		session.close();
