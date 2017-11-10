@@ -14,7 +14,7 @@ public class Consts {
 	public static final String ProviderTokenHeader = "x-custom-session-id";
 	public static final String Origin = "*";
 	public static final String Methods = "POST, GET, PUT";
-	public static final String Headers = "Content-Type, x-custom-token, x-custom-session-id";
+	public static final String Headers = "Content-Type, x-custom-token, x-custom-session-id, x-secure-token";
 	public static final String SignatureHeader = "x-custom-signature";
 
 }
