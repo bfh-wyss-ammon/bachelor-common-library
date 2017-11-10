@@ -1,47 +1,75 @@
 package rest;
 
-import static spark.Spark.before;
-import static spark.Spark.options;
-import static spark.Spark.port;
-
+import static spark.Spark.*;
 import java.math.BigInteger;
-
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-
 import gson.BigIntegerTypeAdapter;
-import spark.Request;
-import spark.Response;
-import util.Consts;
+import util.RouterHelper;
 
 public class BaseRouter {
+	String token = "7596b176-c54a-11e7-abc4-cec278b6b50a";
+	String tokenHeader = "x-secure-token";
 
 	public BaseRouter(int port) {
 		port(port);
-		
-		options("/*", (request, response) -> configureOptions(request, response));
-		before((request, response) -> configureBefore(request, response));
+
+		this.RegisterWebSockets();
+		this.RegisterRoutes();
+
+		options("/*", (request, response) -> RouterHelper.ConfigureOptions(request, response));
+		before((request, response) -> RouterHelper.ConfigureBefore(request, response));
+
 	}
 
-	private String configureOptions(Request request, Response response) {
-		String accessControlRequestHeaders = request.headers("Access-Control-Request-Headers");
-		if (accessControlRequestHeaders != null) {
-			response.header("Access-Control-Allow-Headers", accessControlRequestHeaders);
-		}
+	public void WebSockets() {
 
-		String accessControlRequestMethod = request.headers("Access-Control-Request-Method");
-		if (accessControlRequestMethod != null) {
-			response.header("Access-Control-Allow-Methods", accessControlRequestMethod);
-		}
-		return "OK";
 	}
 
-	private void configureBefore(Request request, Response response) {
-		response.header("Access-Control-Allow-Origin", Consts.Origin);
-		response.header("Access-Control-Request-Method", Consts.Methods);
-		response.header("Access-Control-Allow-Headers", Consts.Headers);
+	private final void RegisterWebSockets() {
+		path("/sockets", () -> {
+			this.WebSockets();
+		});
+	}
 
-		response.type("application/json");
+	public void Routes() {
+
+	}
+
+	public void ProtectedRoutes() {
+
+	}
+
+	private final void RegisterRoutes() {
+
+		before("/api/protected/*", (request, response) -> {
+			String cToken = request.headers(tokenHeader);
+			
+			if(request.requestMethod() == "OPTIONS") {
+				return;
+			}
+						
+			if (cToken == null || !cToken.equals(token)) {
+				halt(401, "Go Away!");
+			}
+		});
+
+		before("/sockets/*", (request, response) -> {
+			
+			String cToken = request.queryParams("token");
+			System.out.println(request.requestMethod() + "token" + cToken);
+			if (cToken == null || !cToken.equals(token)) {
+				halt(401, "Go Away!");
+			}
+		});
+
+		path("/api", () -> {
+			this.Routes();
+		});
+
+		path("/api/protected", () -> {
+			this.ProtectedRoutes();
+		});
 	}
 
 	public static Gson gson;
