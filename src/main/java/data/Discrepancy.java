@@ -5,6 +5,9 @@ import com.google.gson.annotations.Expose;
 import interfaces.HashValue;
 
 public class Discrepancy {
+	
+	private int resultId;
+	private int disputeSessionId;
 
 	@Expose
 	@HashValue
@@ -17,6 +20,31 @@ public class Discrepancy {
 	public Discrepancy() {
 		
 	}
+	
+
+	public int getResultId() {
+		return resultId;
+	}
+
+
+
+	public void setResultId(int resultId) {
+		this.resultId = resultId;
+	}
+
+
+
+	public int getDisputeSessionId() {
+		return disputeSessionId;
+	}
+
+
+
+	public void setDisputeSessionId(int disputeSessionId) {
+		this.disputeSessionId = disputeSessionId;
+	}
+
+
 
 	public int getDeltaToll() {
 		return deltaToll;

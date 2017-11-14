@@ -1,11 +1,25 @@
 package data;
 
+import com.google.gson.annotations.Expose;
+
+import interfaces.HashValue;
+import signatures.Signature;
+
 public class PaymentTuple {
 	
+	@Expose
+	@HashValue
 	private int tollPaid;
+	@Expose
+	@HashValue
 	private String[] tupleHashlist;
+	@Expose
+	@HashValue
 	private String sessionId;
+	@Expose
 	private String providerSignature;
+	@Expose
+	@HashValue
 	private BaseSignature userSignature;
 	
 	
@@ -59,8 +73,8 @@ public class PaymentTuple {
 	}
 
 
-	public void setUserSignature(BaseSignature userSignature) {
-		this.userSignature = userSignature;
+	public void setUserSignature(Signature signature) {
+		this.userSignature = (BaseSignature) signature;
 	}
 	
 	

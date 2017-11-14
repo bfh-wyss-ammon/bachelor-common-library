@@ -182,5 +182,23 @@ public class DatabaseHelper {
 		session.close();
 		return list;
 	}
+	
+	public static <T> List<T> Get(Class<T> t, String where, String dateField, Date after, Date before, String dateField2, Date before2) {
+
+		Session session = sessionFactory.openSession();
+		session.beginTransaction();
+
+		DateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		String strAfter = format.format(after);
+		String strBefore = format.format(before);
+		String strBefore2 = format.format(before2);
+
+		String query = "FROM " + getTableName(t) + " WHERE " + where + " AND " + dateField + " >= '" + strAfter
+				+ "' AND " + dateField + " <= '" + strBefore + " AND " + dateField2 + " <= '"+ strBefore2 + "'";
+
+		List<T> list = (List<T>) session.createQuery(query).list();
+		session.close();
+		return list;
+	}
 
 }

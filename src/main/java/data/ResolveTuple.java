@@ -3,6 +3,7 @@ package data;
 import com.google.gson.annotations.Expose;
 
 import interfaces.HashValue;
+import signatures.Signature;
 
 public class ResolveTuple {
 
@@ -39,8 +40,8 @@ public class ResolveTuple {
 			return signature;
 		}
 
-		public void setSignature(BaseSignature signature) {
-			this.signature = signature;
+		public void setSignature(Signature signature) {
+			this.signature = (BaseSignature) signature;
 		}
 		
 
