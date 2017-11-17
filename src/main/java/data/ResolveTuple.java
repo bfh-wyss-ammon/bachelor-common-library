@@ -40,8 +40,8 @@ public class ResolveTuple {
 			return signature;
 		}
 
-		public void setSignature(Signature signature) {
-			this.signature = (BaseSignature) signature;
+		public void setSignature(BaseSignature signature) {
+			this.signature = signature;
 		}
 		
 

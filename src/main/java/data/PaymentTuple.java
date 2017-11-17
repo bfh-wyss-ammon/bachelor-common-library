@@ -73,8 +73,8 @@ public class PaymentTuple {
 		return userSignature;
 	}
 
-	public void setUserSignature(Signature signature) {
-		this.userSignature = (BaseSignature) signature;
+	public void setUserSignature(BaseSignature signature) {
+		this.userSignature = signature;
 	}
 
 }
