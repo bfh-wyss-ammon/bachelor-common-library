@@ -75,11 +75,11 @@ public class DatabaseHelper {
 		session.close();
 		return result;
 	}
-	
+
 	public static <T> List<T> GetList(Class<T> t, String where) {
 		Session session = sessionFactory.openSession();
 		session.beginTransaction();
-		
+
 		String query = "FROM " + getTableName(t) + " WHERE " + where;
 
 		List<T> list = (List<T>) session.createQuery(query).list();
@@ -155,11 +155,12 @@ public class DatabaseHelper {
 		session.close();
 		return;
 	}
-	
+
 	public static void Delete(Class t, String where, String dateField, Date olderThan) {
 		Session session = sessionFactory.openSession();
 		session.beginTransaction();
-		Query query = session.createQuery("DELETE FROM " + getTableName(t) + " WHERE " + dateField + " < :date AND " + where);
+		Query query = session
+				.createQuery("DELETE FROM " + getTableName(t) + " WHERE " + dateField + " < :date AND " + where);
 		query.setParameter("date", olderThan).executeUpdate();
 		session.getTransaction().commit();
 		session.close();
@@ -178,6 +179,26 @@ public class DatabaseHelper {
 		String query = "FROM " + getTableName(t) + " WHERE " + where + " AND " + dateField + " >= '" + strAfter
 				+ "' AND " + dateField + " <= '" + strBefore + "'";
 
+		List<T> list = (List<T>) session.createQuery(query).list();
+		session.close();
+		return list;
+	}
+
+	public static <T> List<T> Get(Class<T> t, String where, String dateField, Date after, Date before,
+			String dateField2, Date before2) {
+
+		Session session = sessionFactory.openSession();
+		session.beginTransaction();
+
+		DateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		String strAfter = format.format(after);
+		String strBefore = format.format(before);
+		String strBefore2 = format.format(before2);
+
+		String query = "FROM " + getTableName(t) + " WHERE " + where + " AND " + dateField + " >= '" + strAfter
+				+ "' AND " + dateField + " <= '" + strBefore + "' AND " + dateField2 + " <= '" + strBefore2 + "'";
+
+		System.out.println(query);
 		List<T> list = (List<T>) session.createQuery(query).list();
 		session.close();
 		return list;

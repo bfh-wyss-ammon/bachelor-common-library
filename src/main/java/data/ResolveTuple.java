@@ -3,6 +3,7 @@ package data;
 import com.google.gson.annotations.Expose;
 
 import interfaces.HashValue;
+import signatures.Signature;
 
 public class ResolveTuple {
 

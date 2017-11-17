@@ -8,12 +8,13 @@ import gson.BigIntegerTypeAdapter;
 import util.RouterHelper;
 
 public class BaseRouter {
-	String token = "7596b176-c54a-11e7-abc4-cec278b6b50a";
 	String tokenHeader = "x-secure-token";
-
-	public BaseRouter(int port) {
+	String token;
+	
+	public BaseRouter(int port, String token) {
 		port(port);
-
+		this.token = token;
+		
 		this.RegisterWebSockets();
 		this.RegisterRoutes();
 
