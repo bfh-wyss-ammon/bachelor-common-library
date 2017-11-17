@@ -6,7 +6,7 @@ import interfaces.HashValue;
 import signatures.Signature;
 
 public class PaymentTuple {
-	
+
 	@Expose
 	@HashValue
 	private int tollPaid;
@@ -21,62 +21,60 @@ public class PaymentTuple {
 	@Expose
 	@HashValue
 	private BaseSignature userSignature;
-	
-	
+	@Expose
+	@HashValue
+	private String hash;
+
 	public PaymentTuple() {
-		
+
 	}
 
+	public String getHash() {
+		return hash;
+	}
+
+	public void setHash(String hash) {
+		this.hash = hash;
+	}
 
 	public int getTollPaid() {
 		return tollPaid;
 	}
 
-
 	public void setTollPaid(int tollPaid) {
 		this.tollPaid = tollPaid;
 	}
-
 
 	public String[] getTupleHashlist() {
 		return tupleHashlist;
 	}
 
-
 	public void setTupleHashlist(String[] tupleHashlist) {
 		this.tupleHashlist = tupleHashlist;
 	}
-
 
 	public String getSessionId() {
 		return sessionId;
 	}
 
-
 	public void setSessionId(String sessionId) {
 		this.sessionId = sessionId;
 	}
-
 
 	public String getProviderSignature() {
 		return providerSignature;
 	}
 
-
 	public void setProviderSignature(String providerSignature) {
 		this.providerSignature = providerSignature;
 	}
-
 
 	public BaseSignature getUserSignature() {
 		return userSignature;
 	}
 
-
 	public void setUserSignature(Signature signature) {
 		this.userSignature = (BaseSignature) signature;
 	}
-	
-	
 
 }
