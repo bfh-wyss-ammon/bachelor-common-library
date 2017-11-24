@@ -42,6 +42,18 @@ public class BaseRouter {
 	}
 
 	private final void RegisterRoutes() {
+		
+		before("/*",  (request, response) -> {
+			System.out.println("route in:" + request.url());
+			System.out.println("body:" + request.body());
+		});
+		
+		
+		after("/*",  (request, response) -> {
+			System.out.println("route out:" + request.url());
+			System.out.println("body:" + response.body());
+		});
+		
 
 		before("/api/protected/*", (request, response) -> {
 			String cToken = request.headers(tokenHeader);
