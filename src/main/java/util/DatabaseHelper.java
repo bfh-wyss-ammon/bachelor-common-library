@@ -1,3 +1,7 @@
+/**
+ * This class has the static methods with the ORM Mapper related code. We use these methods to access the database.
+ */
+
 package util;
 
 import java.io.Serializable;

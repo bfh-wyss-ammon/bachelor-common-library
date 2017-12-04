@@ -1,3 +1,9 @@
+/**
+ * This class stores the list L that is sent from the provider to the mobile application in the toll calculation protocol. 
+ * It serves serializing/parsing purpose of this data.
+ * It is also used to get the HashValue on list L and store the provider signature on list L.
+ */
+
 package data;
 
 import java.util.HashMap;

@@ -1,3 +1,7 @@
+/**
+ * This class helps to store the settings (AuthoritySettings, ProviderSettings, CommonSettings) to the file system in a JSON format.
+ */
+
 package util;
 
 import java.io.BufferedReader;

@@ -1,6 +1,8 @@
-package data;
+/**
+ * This class stores the settings that are common to the provider and the authority in a plain text file on the file system.
+ */
 
-import static spark.Spark.secure;
+package data;
 
 public class CommonSettings {
 

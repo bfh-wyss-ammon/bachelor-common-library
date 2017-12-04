@@ -1,3 +1,8 @@
+/**
+ * This class stores the data of one element of the list T in the dispute resolving protocol.
+ * It also serves serializing / parsing and hashing of the same data.
+ */
+
 package data;
 
 import com.google.gson.annotations.Expose;

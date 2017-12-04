@@ -1,3 +1,7 @@
+/**
+ * This class specifies the basic setting every spark API Router in our project has to implement.
+ */
+
 package rest;
 
 import static spark.Spark.*;
@@ -26,10 +30,11 @@ public class BaseRouter {
 
 	public BaseRouter(int port, String token) {
 		CommonSettings settings = SettingsHelper.getSettings(CommonSettings.class);
-		if(settings.isTls()) {
-			secure(settings.getKeyStoreFilePath(), settings.getKeyStorePassword(), settings.getTrustStoreFilePath(), settings.getTrustStorePassword());			
+		if (settings.isTls()) {
+			secure(settings.getKeyStoreFilePath(), settings.getKeyStorePassword(), settings.getTrustStoreFilePath(),
+					settings.getTrustStorePassword());
 		}
-		
+
 		port(port);
 		this.token = token;
 
@@ -65,17 +70,18 @@ public class BaseRouter {
 
 		if (settings.isDebug()) {
 			before("/*", (request, response) -> {
-				try{
+				try {
 					Path file = Paths.get("debugLog.txt");
-					if(!Files.exists(file)) {
+					if (!Files.exists(file)) {
 						Files.createFile(file);
 					}
-				Date date = new Date();
-				SimpleDateFormat format = new SimpleDateFormat();
-				List<String> lines = Arrays.asList(format.format(date) + " route in: " + request.requestMethod() + " " + request.url(),
-						"body: " + request.body());
+					Date date = new Date();
+					SimpleDateFormat format = new SimpleDateFormat();
+					List<String> lines = Arrays.asList(
+							format.format(date) + " route in: " + request.requestMethod() + " " + request.url(),
+							"body: " + request.body());
 
-				Files.write(file, lines, Charset.forName("UTF-8"), StandardOpenOption.APPEND);
+					Files.write(file, lines, Charset.forName("UTF-8"), StandardOpenOption.APPEND);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -84,14 +90,15 @@ public class BaseRouter {
 			after("/*", (request, response) -> {
 				try {
 					Path file = Paths.get("debugLog.txt");
-					if(!Files.exists(file)) {
+					if (!Files.exists(file)) {
 						Files.createFile(file);
 					}
-				Date date = new Date();
-				SimpleDateFormat format = new SimpleDateFormat();
-				List<String> lines = Arrays.asList(format.format(date) + " route out: " + request.requestMethod() + " " + request.url(),
-						"body: " + response.body());
-				Files.write(file, lines, Charset.forName("UTF-8"), StandardOpenOption.APPEND);
+					Date date = new Date();
+					SimpleDateFormat format = new SimpleDateFormat();
+					List<String> lines = Arrays.asList(
+							format.format(date) + " route out: " + request.requestMethod() + " " + request.url(),
+							"body: " + response.body());
+					Files.write(file, lines, Charset.forName("UTF-8"), StandardOpenOption.APPEND);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}

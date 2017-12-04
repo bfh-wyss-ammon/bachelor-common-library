@@ -1,3 +1,7 @@
+/**
+ * This class stores the constants to the API-Router directly in the code. These are not configurable by the application administrator.
+ */
+
 package util;
 
 public class Consts {
@@ -9,7 +13,7 @@ public class Consts {
 	public static final int HttpConflict = 409;
 	public static final int HttpNotImplemented = 501;
 	public static final int HttpBadRequest = 400;
-	
+
 	public static final String TokenHeader = "x-custom-token";
 	public static final String ProviderTokenHeader = "x-custom-session-id";
 	public static final String Origin = "*";

@@ -1,3 +1,8 @@
+/**
+ * This class stores all data that is sent from the provider to the authority in the dispute resolving protocol. That's why it is called a Resolve Request.
+ * It is also used for serialization, parsing and hashing.
+ */
+
 package data;
 
 import java.util.List;
@@ -5,14 +10,14 @@ import com.google.gson.annotations.Expose;
 import interfaces.HashValue;
 
 public class ResolveRequest {
-	
+
 	@Expose
 	private int groupId;
-	
+
 	@Expose
 	@HashValue
 	private String disputeSessionId;
-	
+
 	@Expose
 	@HashValue
 	private List<ResolveTuple> S;
@@ -20,9 +25,9 @@ public class ResolveRequest {
 	private List<PaymentTuple> T;
 	@Expose
 	private String providerSignature;
-	
+
 	public ResolveRequest() {
-		
+
 	}
 
 	public int getGroupId() {
@@ -64,7 +69,5 @@ public class ResolveRequest {
 	public void setProviderSignature(String providerSignature) {
 		this.providerSignature = providerSignature;
 	}
-	
-	
-	
+
 }

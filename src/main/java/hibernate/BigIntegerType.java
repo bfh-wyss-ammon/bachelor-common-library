@@ -1,3 +1,7 @@
+/**
+ * This class specifies how we have to adapt the google JSON parser to accommodate for BigInteger type.
+ */
+
 package hibernate;
 
 import java.io.Serializable;
