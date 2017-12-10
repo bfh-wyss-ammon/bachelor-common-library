@@ -13,6 +13,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
@@ -50,7 +51,12 @@ public class Logger {
 			}
 			Date date = new Date();
 			SimpleDateFormat format = new SimpleDateFormat();
-			List<String> line = Arrays.asList(lines);
+			List<String> line = new ArrayList<String>();
+			
+			for(int i = 0; i < lines.length; i++) {
+				line.add(lines[i]);
+			}
+			
 			line.add(0, format.format(date));
 			Files.write(file, line, Charset.forName("UTF-8"), StandardOpenOption.APPEND);
 		} catch (Exception e) {
