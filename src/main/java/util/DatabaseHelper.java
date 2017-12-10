@@ -4,7 +4,9 @@
 
 package util;
 
+import java.io.File;
 import java.io.Serializable;
+import java.nio.file.Paths;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
@@ -25,29 +27,15 @@ import org.hibernate.cfg.Configuration;
 import org.hibernate.criterion.Restrictions;
 
 public class DatabaseHelper {
-	private static final StandardServiceRegistry registry;
 	private static SessionFactory sessionFactory;
 
 	static {
-		registry = new StandardServiceRegistryBuilder().configure().build();
 		try {
-			sessionFactory = new MetadataSources(registry).buildMetadata().buildSessionFactory();
+			sessionFactory = new Configuration().configure(Paths.get("hibernate.cfg.xml").toFile()).buildSessionFactory();
 		} catch (Exception ex) {
 			// The registry would be destroyed by the SessionFactory, but we had trouble
 			// building the SessionFactory
 			// so destroy it manually.
-			StandardServiceRegistryBuilder.destroy(registry);
-			ex.printStackTrace();
-			Logger.errorLogger(ex);
-
-		}
-	}
-
-	static {
-		try {
-			sessionFactory = new Configuration().configure().buildSessionFactory();
-
-		} catch (Exception ex) {
 			ex.printStackTrace();
 			Logger.errorLogger(ex);
 
