@@ -1,3 +1,7 @@
+/**
+ * This class enforces the methods and header settings to the API-Router.
+ */
+
 package util;
 
 import spark.Request;

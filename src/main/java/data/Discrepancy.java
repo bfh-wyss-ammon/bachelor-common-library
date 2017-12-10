@@ -1,3 +1,8 @@
+/**
+ * This class is for serializing/parsing the results of the dispute resolving protocol to and from JSON. It is one entry in the list of dicrepancies of the dispute result.
+ * It also stores to the database of the provider.
+ */
+
 package data;
 
 import com.google.gson.annotations.Expose;

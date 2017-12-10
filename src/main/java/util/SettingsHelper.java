@@ -1,3 +1,7 @@
+/**
+ * This class helps to store the settings (AuthoritySettings, ProviderSettings, CommonSettings) to the file system in a JSON format.
+ */
+
 package util;
 
 import java.io.BufferedReader;
@@ -9,13 +13,14 @@ import com.google.gson.Gson;
 
 public class SettingsHelper {
 	private static Gson gson;
-	private static String filePath = "settings.json";
+	private static String filePath;
 
 	static {
 		gson = new Gson();
 	}
 
 	public static <T> T getSettings(Class<T> type) {
+		filePath = type.getName()+ ".json";
 		FileReader reader;
 		try {
 			File f = new File(filePath);
@@ -32,17 +37,20 @@ public class SettingsHelper {
 				json += line;
 			}
 			reader.close();
-			return (T)gson.fromJson(json, type.getClass());
+			return (T)gson.fromJson(json, type);
 
-		} catch (Exception e) {
+		} catch (Exception ex) {
 			// TODO ex handling
-			e.printStackTrace();
+			ex.printStackTrace();
+			Logger.errorLogger(ex);
+
 		}
 		return null;
 
 	}
 
 	public static <T> void saveSettings(Class<T> type, T settings) {
+		filePath = type.getName()+ ".json";
 		String jsonSettings = gson.toJson((T)settings);
 
 		FileWriter writer;
@@ -50,9 +58,11 @@ public class SettingsHelper {
 			writer = new FileWriter(filePath);
 			writer.write(jsonSettings);
 			writer.close();
-		} catch (Exception e) {
+		} catch (Exception ex) {
 			// TODO ex handling
-			e.printStackTrace();
+			ex.printStackTrace();
+			Logger.errorLogger(ex);
+
 		}
 	}
 }

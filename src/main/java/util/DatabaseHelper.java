@@ -1,3 +1,7 @@
+/**
+ * This class has the static methods with the ORM Mapper related code. We use these methods to access the database.
+ */
+
 package util;
 
 import java.io.Serializable;
@@ -28,12 +32,14 @@ public class DatabaseHelper {
 		registry = new StandardServiceRegistryBuilder().configure().build();
 		try {
 			sessionFactory = new MetadataSources(registry).buildMetadata().buildSessionFactory();
-		} catch (Exception e) {
+		} catch (Exception ex) {
 			// The registry would be destroyed by the SessionFactory, but we had trouble
 			// building the SessionFactory
 			// so destroy it manually.
 			StandardServiceRegistryBuilder.destroy(registry);
-			e.printStackTrace();
+			ex.printStackTrace();
+			Logger.errorLogger(ex);
+
 		}
 	}
 
@@ -41,8 +47,10 @@ public class DatabaseHelper {
 		try {
 			sessionFactory = new Configuration().configure().buildSessionFactory();
 
-		} catch (Exception e) {
-			e.printStackTrace();
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			Logger.errorLogger(ex);
+
 		}
 	}
 
