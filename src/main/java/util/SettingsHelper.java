@@ -39,9 +39,11 @@ public class SettingsHelper {
 			reader.close();
 			return (T)gson.fromJson(json, type);
 
-		} catch (Exception e) {
+		} catch (Exception ex) {
 			// TODO ex handling
-			e.printStackTrace();
+			ex.printStackTrace();
+			Logger.errorLogger(ex);
+
 		}
 		return null;
 
@@ -56,9 +58,11 @@ public class SettingsHelper {
 			writer = new FileWriter(filePath);
 			writer.write(jsonSettings);
 			writer.close();
-		} catch (Exception e) {
+		} catch (Exception ex) {
 			// TODO ex handling
-			e.printStackTrace();
+			ex.printStackTrace();
+			Logger.errorLogger(ex);
+
 		}
 	}
 }

@@ -6,21 +6,12 @@ package rest;
 
 import static spark.Spark.*;
 import java.math.BigInteger;
-import java.nio.charset.Charset;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.nio.file.StandardOpenOption;
-import java.text.SimpleDateFormat;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.List;
-
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 import data.CommonSettings;
 import gson.BigIntegerTypeAdapter;
+import util.Logger;
 import util.RouterHelper;
 import util.SettingsHelper;
 
@@ -68,40 +59,19 @@ public class BaseRouter {
 
 		CommonSettings settings = SettingsHelper.getSettings(CommonSettings.class);
 
+		//handle debug Logging
 		if (settings.isDebug()) {
 			before("/*", (request, response) -> {
-				try {
-					Path file = Paths.get("debugLog.txt");
-					if (!Files.exists(file)) {
-						Files.createFile(file);
-					}
-					Date date = new Date();
-					SimpleDateFormat format = new SimpleDateFormat();
-					List<String> lines = Arrays.asList(
-							format.format(date) + " route in: " + request.requestMethod() + " " + request.url(),
-							"body: " + request.body());
-
-					Files.write(file, lines, Charset.forName("UTF-8"), StandardOpenOption.APPEND);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
+				String[] loglines = { "route in: " + request.requestMethod() + " " + request.url(),
+						"body: " + request.body() };
+				Logger.debugLogger(loglines);
 			});
 
 			after("/*", (request, response) -> {
-				try {
-					Path file = Paths.get("debugLog.txt");
-					if (!Files.exists(file)) {
-						Files.createFile(file);
-					}
-					Date date = new Date();
-					SimpleDateFormat format = new SimpleDateFormat();
-					List<String> lines = Arrays.asList(
-							format.format(date) + " route out: " + request.requestMethod() + " " + request.url(),
-							"body: " + response.body());
-					Files.write(file, lines, Charset.forName("UTF-8"), StandardOpenOption.APPEND);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
+
+				String[] loglines = { "route out: " + request.requestMethod() + " " + request.url(),
+						"body: " + response.body() };
+				Logger.debugLogger(loglines);
 			});
 		}
 
